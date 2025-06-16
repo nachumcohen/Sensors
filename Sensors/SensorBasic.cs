@@ -16,7 +16,7 @@ namespace TheInvestingationGame.Sensors
             Name = name;
         }
 
-        public void Activate(Agent iranianAgent)
+        public virtual void Activate(Agent iranianAgent)
         {
             if (iranianAgent.IsSensor(Name))
             {

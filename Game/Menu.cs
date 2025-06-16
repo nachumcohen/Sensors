@@ -15,6 +15,7 @@ namespace TheInvestingationGame
 
             Console.WriteLine(@"Choos:
             1.Play Agent Basic
+            2. Play SquadLeader
             exit. go out");
 
             while (true)
@@ -25,6 +26,9 @@ namespace TheInvestingationGame
                 {
                     case "1":
                         Play.StartAgentBasic(); 
+                        break;
+                    case "2":
+                        Play.StartAgentSquadLeader();
                         break;
 
                     case "exit":
@@ -38,7 +42,7 @@ namespace TheInvestingationGame
                 break;
             }
             
-            Console.WriteLine("👋");
+            Console.WriteLine("Bye");
         }
     }
 }
