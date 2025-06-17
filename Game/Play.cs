@@ -10,55 +10,37 @@ namespace TheInvestingationGame
 {
     internal static class Play
     {
+        static bool IsWin1 = false;
+        static bool IsWin2 = false;
+        static bool IsWin3 = false;
+        static bool IsWin4 = false;
+
+        static List<ISensor> Sensors;
         public static void StartAgentBasic()
         {
-            Console.WriteLine("enter Name");
-            string Name = Console.ReadLine();
-            Agent agent = new AgentBasic(Name);
+            AgentBasic agent = new AgentBasic();
+            Sensors = new List<ISensor>();
             while (agent.NumGuessing() < agent.GetSensorCount())
             {
-                string sensor;
-                while (true)
-                {
-                    Console.WriteLine("enter basic sensor: Thermal or Cellular");
-                    sensor = Console.ReadLine();
-                    if (sensor == "Thermal" || sensor == "Cellular")
-                    {
-                        break;
-                    }
-                    Console.WriteLine("enter only Thermal or Cellular");
-                }
-                SensorBasic sensorBasic = new SensorBasic(sensor);
-                sensorBasic.Activate(agent);
-                agent.AddNumAttack();
+                Logic(agent);
             }
             Console.WriteLine($"Num turns {agent.ReturnNumAttack()}");
+            IsWin1 = true;
 
         }
 
         public static void StartAgentSquadLeader()
         {
-            Console.WriteLine("enter Name");
-            string Name = Console.ReadLine();
-            Squad_Leader agent = new Squad_Leader(Name);
+            if (!IsWin1)
+            {
+                Console.WriteLine("Completed first stage");
+                return;
+            }
+            Squad_Leader agent = new Squad_Leader();
+            Sensors = new List<ISensor>();
             while (agent.NumGuessing() < agent.GetSensorCount())
             {
-                string sensorName;
-                while (true)
-                {
-                    Console.WriteLine("enter basic sensor: Thermal or Cellular or Traffic or Distance");
-                    sensorName = Console.ReadLine();
-                    if (sensorName == "Thermal" || sensorName == "Cellular" || sensorName == "Traffic" || sensorName == "Distance")
-                    {
-                        break;
-                    }
-                    Console.WriteLine("enter only Thermal or Cellular or Traffic or Distance");
-                }
-                SensorBasic sensorBasic = new SensorBasic(sensorName);
-
-                sensorBasic.Activate(agent);
-
-                agent.AddNumAttack();
+                Logic(agent);
 
                 if (agent.ReturnNumAttack() % 3 == 0)
                 {
@@ -66,6 +48,86 @@ namespace TheInvestingationGame
                 }
             }
             Console.WriteLine($"Num turns {agent.ReturnNumAttack()}");
+            IsWin2 = true;
+
+        }
+
+        public static void StartAgentOrganizationLeader()
+        {
+            if (!IsWin2)
+            {
+                Console.WriteLine("Completed first stage");
+                return;
+            }
+
+            OrganizationLeader agent = new OrganizationLeader();
+            Sensors = new List<ISensor>();
+            while (agent.NumGuessing() < agent.GetSensorCount())
+            {
+                Logic(agent);
+                if (agent.ReturnNumAttack() % 3 == 0)
+                {
+                    agent.RemoveSensor();
+                }
+                if (agent.ReturnNumAttack() % 15 == 0)
+                {
+                    agent.ResetDictSensorsAndListExposureSensor();
+                }
+            }
+            Console.WriteLine($"Num turns {agent.ReturnNumAttack()}");
+            IsWin3 = true;
+        }
+
+        public static void StartAgentSeniorCommander()
+        {
+            if (!IsWin3)
+            {
+                Console.WriteLine("Completed first stage");
+                return;
+            }
+            SeniorCommander agent = new SeniorCommander();
+
+            Sensors = new List<ISensor>();
+            while (agent.NumGuessing() < agent.GetSensorCount())
+            {
+                Logic (agent);
+                if (agent.ReturnNumAttack() % 3 == 0)
+                {
+                    agent.RemoveTowSensors();
+                }
+            }
+            Console.WriteLine($"Num turns {agent.ReturnNumAttack()}");
+            IsWin4 = true;
+            
+        }
+
+        public static void Logic(Agent agent)
+        {
+            ISensor Sensor;
+            string TypeSensor;
+            while (true)
+            {
+                string StringSensors = string.Join(" or ", ListSensor.ReturnList());
+                Console.WriteLine($"enter sensor: {StringSensors}");
+                TypeSensor = Console.ReadLine();
+                if (ListSensor.ReturnList().Contains(TypeSensor))
+                {
+                    break;
+                }
+                Console.WriteLine($"enter only {StringSensors}");
+            }
+
+            Sensor = Sensors.FirstOrDefault(s => s.Type == TypeSensor);
+            if (Sensor == null)
+            {
+                Type type = Type.GetType($"TheInvestingationGame.Sensors.{TypeSensor}");
+                Sensor = (ISensor)Activator.CreateInstance(type);
+                Sensors.Add(Sensor);
+            }
+
+            Sensor.Activate(agent);
+            agent.AddNumAttack();
+
 
         }
     }

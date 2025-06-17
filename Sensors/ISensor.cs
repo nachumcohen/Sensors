@@ -9,8 +9,7 @@ namespace TheInvestingationGame
 {
     internal interface ISensor
     {
-        string Name { get; }
-
+        string Type { get; }
         void Activate(Agent iranianAgent);
     }
 }

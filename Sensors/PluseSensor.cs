@@ -11,24 +11,25 @@ namespace TheInvestingationGame.Sensors
     {
         int Active = 3;
         bool Status = true;
-
-        public PluseSensor(string name) : base(name) { }
+        public PluseSensor() : base()
+        {
+            
+        }
 
         public override void Activate(Agent iranianAgent)
         {
-            if (iranianAgent.IsSensor(Name))
+            if (Active > 0)
             {
-                if (Active > 0)
+                if (iranianAgent.IsSensor(Type))
                 {
                     iranianAgent.AddExposureSensor(this);
-                    Active--;
                 }
-                else
-                {
-                    Console.WriteLine("Sensor is broken");
-                    Status = false;
-                }
-
+                Active--;
+            }
+            else
+            {
+                Console.WriteLine("Sensor is broken");
+                Status = false;
             }
         }
         public int GetManyTurns()

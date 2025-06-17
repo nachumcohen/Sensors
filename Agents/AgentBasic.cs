@@ -8,6 +8,6 @@ namespace TheInvestingationGame.Agents
 {
     internal class AgentBasic : Agent
     {
-        public AgentBasic(string name) : base(name) { }
+        public AgentBasic() : base() { }
     }
 }
