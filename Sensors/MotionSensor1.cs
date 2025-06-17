@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace TheInvestingationGame.Sensors
 {
-    internal class LightSensore
+    internal class MotionSensor1
     {
+        
     }
 }
