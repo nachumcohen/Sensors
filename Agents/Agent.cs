@@ -12,24 +12,30 @@ namespace TheInvestingationGame.Agents
     {
 
         static Random random = new Random();
-        protected string Name { get; }
-        protected Dictionary<string, int> Sensors;
+        protected Dictionary<string, int> Sensors {  get;  set; }
         protected List<ISensor> ExposureSensor = new List<ISensor>();
         protected int SensorCount;
+        protected List<string> Types;
+        protected int NumAttack;
 
-        public Agent(string name)
+        public Agent()
         {
-            Name = name;
             SensorCount = GetSensorCount();
-            string[] Names = RandomTypesSensors();
+            
+            Types = ListSensor.ReturnList();
             Sensors = new Dictionary<string , int>();
+            NumAttack = 0;
+            StartSensors();
+        }
 
-            for (int i = 0; i < 2;  i++)
+        public virtual void StartSensors()
+        {
+            for (int i = 0; i < GetSensorCount(); i++)
             {
-                string sensor = Names[random.Next(Names.Length)];
+                string sensor = Types[random.Next(Types.Count)];
                 if (Sensors.ContainsKey(sensor))
                 {
-                    Sensors[sensor] +=1;
+                    Sensors[sensor] += 1;
                 }
                 else
                 {
@@ -37,29 +43,25 @@ namespace TheInvestingationGame.Agents
                 }
             }
         }
+        
         public virtual int GetSensorCount()
         {
             return 2;
         }
 
-        public virtual string[] RandomTypesSensors()
+        public virtual void AddExposureSensor(ISensor sensor)
         {
-            string[] Names = new string[] { "Thermal", "Cellular" };
-            return Names;
-        }
+            ExposureSensor.Add(sensor);
+            Sensors[sensor.Type] -= 1;
 
-        public virtual void AddExposureSensor(SensorBasic sensorBasic)
-        {
-            ExposureSensor.Add(sensorBasic);
-            Sensors[sensorBasic.Name] -=1;
-            Console.WriteLine(ExposureSensor.Count);
+            Console.WriteLine($"len ExposureSensor {ExposureSensor.Count}");
         }
         public virtual bool IsSensor(string sensor)
         {
             return Sensors.TryGetValue(sensor, out int Value) && Value > 0;
         }
 
-        public virtual int IsGuessing()
+        public virtual int NumGuessing()
         {
             int len = ExposureSensor.Count;
             if (len < SensorCount)
@@ -70,9 +72,24 @@ namespace TheInvestingationGame.Agents
             else
             {
                 Console.WriteLine($"Num Guessing {len} / {SensorCount}");
-                Console.WriteLine($"Agent Name {Name} exposed");
+                Console.WriteLine("Agent Name exposed");
             }
             return len;
+        }
+
+        public void AddNumAttack()
+        {
+            NumAttack++;
+        }
+
+        public int ReturnNumAttack()
+        {
+            return NumAttack;
+        }
+
+        public Dictionary<string, int> GetSensors()
+        {
+            return Sensors;
         }
 
 

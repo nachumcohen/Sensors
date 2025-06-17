@@ -45,18 +45,27 @@
   <ItemGroup>
     <Compile Include="Agents\Agent.cs" />
     <Compile Include="Agents\AgentBasic.cs" />
+    <Compile Include="Agents\SeniorCommander.cs" />
+    <Compile Include="Agents\Squad Leader.cs" />
+    <Compile Include="Sensors\AudioSensor1.cs" />
     <Compile Include="Sensors\ISensor.cs" />
-    <Compile Include="Menu.cs" />
-    <Compile Include="Play.cs" />
+    <Compile Include="Game\Menu.cs" />
+    <Compile Include="Game\Play.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sensors\LightSensore1.cs" />
+    <Compile Include="Sensors\ListSensor.cs" />
+    <Compile Include="Sensors\MagneticSensor.cs" />
+    <Compile Include="Sensors\MotionSensor1.cs" />
+    <Compile Include="Agents\OrganizationLeader.cs" />
+    <Compile Include="Sensors\PluseSensor.cs" />
     <Compile Include="Sensors\SensorBasic.cs" />
+    <Compile Include="Sensors\SignalSensor1.cs" />
+    <Compile Include="Sensors\ThermalSensor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interface\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

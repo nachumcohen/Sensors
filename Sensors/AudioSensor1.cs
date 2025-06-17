@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TheInvestingationGame.Agents
+namespace TheInvestingationGame.Sensors
 {
-    internal class AgentBasic : Agent
+    internal class AudioSensor1
     {
-        public AgentBasic() : base() { }
     }
 }

@@ -9,16 +9,17 @@ namespace TheInvestingationGame.Sensors
 {
     internal class SensorBasic : ISensor
     {
-        public string Name { get; private set; }
+        public string Type { get; protected set; }
 
-        public SensorBasic(string name)
+        public SensorBasic()
         {
-            Name = name;
+            Type = this.GetType().Name;
+            ListSensor.AddList(this);
         }
 
-        public void Activate(Agent iranianAgent)
+        public virtual void Activate(Agent iranianAgent)
         {
-            if (iranianAgent.IsSensor(Name))
+            if (iranianAgent.IsSensor(Type))
             {
                 iranianAgent.AddExposureSensor(this);
             }
