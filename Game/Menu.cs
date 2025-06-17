@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,23 +14,33 @@ namespace TheInvestingationGame
         public static void menu()
         {
 
-            Console.WriteLine(@"Choos:
-            1.Play Agent Basic
-            2. Play SquadLeader
-            exit. go out");
-
             while (true)
             {
+                    Console.WriteLine(@"Choos:
+                1.Play Agent Basic
+                2. Play Squad Leader
+                3. Play Senior Commander
+                4. Play Organization Leader
+                exit. go out");
+
                 string ChoosUser = Console.ReadLine();
+
                 ChoosUser.ToLower();
                 switch (ChoosUser)
                 {
                     case "1":
                         Play.StartAgentBasic(); 
-                        break;
+                        continue;
                     case "2":
                         Play.StartAgentSquadLeader();
-                        break;
+                        continue;
+
+                    case "3":
+                        Play.StartAgentSeniorCommander();
+                        continue;
+                    case "4":
+                        Play.StartAgentOrganizationLeader();
+                        continue;
 
                     case "exit":
                         break;

@@ -12,27 +12,30 @@ namespace TheInvestingationGame.Agents
     {
 
         static Random random = new Random();
-        protected string Name { get; }
-        protected Dictionary<string, int> Sensors;
+        protected Dictionary<string, int> Sensors {  get;  set; }
         protected List<ISensor> ExposureSensor = new List<ISensor>();
         protected int SensorCount;
-        protected string[] Types;
-        int NumAttack;
+        protected List<string> Types;
+        protected int NumAttack;
 
-        public Agent(string name)
+        public Agent()
         {
-            Name = name;
             SensorCount = GetSensorCount();
-            Types = TypesSensors();
+            
+            Types = ListSensor.ReturnList();
             Sensors = new Dictionary<string , int>();
             NumAttack = 0;
+            StartSensors();
+        }
 
-            for (int i = 0; i < GetSensorCount();  i++)
+        public virtual void StartSensors()
+        {
+            for (int i = 0; i < GetSensorCount(); i++)
             {
-                string sensor = Types[random.Next(Types.Length)];
+                string sensor = Types[random.Next(Types.Count)];
                 if (Sensors.ContainsKey(sensor))
                 {
-                    Sensors[sensor] +=1;
+                    Sensors[sensor] += 1;
                 }
                 else
                 {
@@ -46,16 +49,10 @@ namespace TheInvestingationGame.Agents
             return 2;
         }
 
-        public virtual string[] TypesSensors()
-        {
-            string[] Names = new string[] { "Thermal", "Cellular" };
-            return Names;
-        }
-
         public virtual void AddExposureSensor(ISensor sensor)
         {
             ExposureSensor.Add(sensor);
-            Sensors[sensor.Name] -= 1;
+            Sensors[sensor.Type] -= 1;
 
             Console.WriteLine($"len ExposureSensor {ExposureSensor.Count}");
         }
@@ -75,7 +72,7 @@ namespace TheInvestingationGame.Agents
             else
             {
                 Console.WriteLine($"Num Guessing {len} / {SensorCount}");
-                Console.WriteLine($"Agent Name {Name} exposed");
+                Console.WriteLine("Agent Name exposed");
             }
             return len;
         }
@@ -88,6 +85,11 @@ namespace TheInvestingationGame.Agents
         public int ReturnNumAttack()
         {
             return NumAttack;
+        }
+
+        public Dictionary<string, int> GetSensors()
+        {
+            return Sensors;
         }
 
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TheInvestingationGame.Sensors
 {
-    internal class SignalSensor
+    internal class SignalSensor1
     {
     }
 }
