@@ -5,16 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TheInvestingationGame.Agents;
+using TheInvestingationGame.DAL;
 using TheInvestingationGame.Sensors;
 
 namespace TheInvestingationGame
 {
     internal class Play
     {
-        //internal static bool IsWin1;
-        //internal static bool IsWin2;
-        //internal static bool IsWin3;
-        //internal static bool IsWin4;
+
 
         static List<ISensor> Sensors;
         static bool IsExit = false;
@@ -37,7 +35,7 @@ namespace TheInvestingationGame
             }
 
             Win(playerData, agent);
-            //IsWin1 = true;
+            
 
         }
 
@@ -65,7 +63,7 @@ namespace TheInvestingationGame
                 
             }
             Win(playerData, agent);
-            //IsWin2 = true;
+            
 
         }
 
@@ -126,7 +124,6 @@ namespace TheInvestingationGame
 
             Win(playerData, agent);
 
-            //IsWin4 = true;
         }
 
 
@@ -216,6 +213,8 @@ namespace TheInvestingationGame
             playerData.MountTurns = agent.ReturnNumAttack();
             playerData.Score = playerData.GetScore();
 
+            DalPlayerData.AddUserData(playerData);
+
             Console.WriteLine("********************************************");
             Console.WriteLine("********************************************");
             Console.WriteLine("**                                        **");
@@ -234,6 +233,8 @@ namespace TheInvestingationGame
             playerData.NumMistake = agent.ReturnNumMistake();
             playerData.MountTurns = agent.ReturnNumAttack();
             playerData.Score = playerData.GetScore();
+
+            DalPlayerData.AddUserData(playerData);
 
             Console.WriteLine("********************************************");
             Console.WriteLine("********************************************");
