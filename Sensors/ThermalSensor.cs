@@ -13,12 +13,10 @@ namespace TheInvestingationGame.Sensors
         static Random random = new Random();
         public ThermalSensor() : base() { }
 
-        public override void Activate(Agent iranianAgent)
+        public override bool Activate(Agent iranianAgent)
         {
             if (iranianAgent.IsSensor(Type))
             {
-                iranianAgent.AddExposureSensor(this);
-
                 List<string> keys = new List<string>();
                 foreach (var key in iranianAgent.GetSensors())
                 {
@@ -32,8 +30,10 @@ namespace TheInvestingationGame.Sensors
                     string agent = keys[random.Next(keys.Count)];
                     Console.WriteLine(agent);
                 }
+                return true;
                 
             }
+            return false;
         }
     }
 }

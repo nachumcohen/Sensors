@@ -18,6 +18,10 @@ namespace TheInvestingationGame.Agents
         {
             return 4;
         }
+        public override int GetLevelAgent()
+        {
+            return 2;
+        }
 
         public virtual void RemoveSensor()
         {
@@ -25,15 +29,21 @@ namespace TheInvestingationGame.Agents
             {
                 if (ExposureSensor.Count > 0)
                 {
+                    MagneticSensor sensor1 = Sensors.OfType<MagneticSensor>().FirstOrDefault();
+                    if (sensor1 != null)
+                    {
+                        sensor1.Cancelsterroristattack();
+                        return;
+                    }
                     int index = random.Next(ExposureSensor.Count);
                     ISensor sensor = ExposureSensor[index];
-                    if (sensor is MagneticSensor)
-                    {
-                        if (((MagneticSensor)sensor).Cancelsterroristattack())
-                        {
-                            return;
-                        }
-                    }
+                    //if (sensor is MagneticSensor)
+                    //{
+                    //    if (((MagneticSensor)sensor).Cancelsterroristattack())
+                    //    {
+                    //        return;
+                    //    }
+                    //}
                     ExposureSensor.RemoveAt(index);
                     Sensors[sensor.Type] += 1;
                     Console.WriteLine("remove sensor");

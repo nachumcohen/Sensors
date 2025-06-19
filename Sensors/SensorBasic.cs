@@ -17,12 +17,14 @@ namespace TheInvestingationGame.Sensors
             ListSensor.AddList(this);
         }
 
-        public virtual void Activate(Agent iranianAgent)
+        public virtual bool Activate(Agent iranianAgent)
         {
             if (iranianAgent.IsSensor(Type))
             {
-                iranianAgent.AddExposureSensor(this);
+                //iranianAgent.AddExposureSensor(this);
+                return true;
             }
+            return false;
         }
     }
 }

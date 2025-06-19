@@ -10,6 +10,6 @@ namespace TheInvestingationGame
     internal interface ISensor
     {
         string Type { get; }
-        void Activate(Agent iranianAgent);
+        bool Activate(Agent iranianAgent);
     }
 }
