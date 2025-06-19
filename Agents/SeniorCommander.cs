@@ -11,10 +11,14 @@ namespace TheInvestingationGame.Agents
     {
         static Random random = new Random();
         public SeniorCommander() : base() { }
-        
+
         public override int GetSensorCount()
         {
             return 6;
+        }
+        public override int GetLevelAgent()
+        {
+            return 3;
         }
 
         public void RemoveTowSensors()
@@ -25,15 +29,21 @@ namespace TheInvestingationGame.Agents
                 {
                     for (int i = 0; i < 2; i++)
                     {
+                        MagneticSensor sensor1 = Sensors.OfType<MagneticSensor>().FirstOrDefault();
+                        if (sensor1 != null)
+                        {
+                            sensor1.Cancelsterroristattack();
+                            continue;
+                        }
                         int index = random.Next(ExposureSensor.Count);
                         ISensor sensor = ExposureSensor[index];
-                        if (sensor is MagneticSensor)
-                        {
-                            if (((MagneticSensor)sensor).Cancelsterroristattack())
-                            {
-                                 continue;
-                            }
-                        }
+                        //if (sensor is MagneticSensor)
+                        //{
+                        //    if (((MagneticSensor)sensor).Cancelsterroristattack())
+                        //    {
+                        //         continue;
+                        //    }
+                        //}
                         ExposureSensor.RemoveAt(index);
                         Sensors[sensor.Type] += 1;
                         Console.WriteLine("remove sensor");
@@ -41,15 +51,21 @@ namespace TheInvestingationGame.Agents
                 }
                 if (ExposureSensor.Count == 1)
                 {
+                    MagneticSensor sensor1 = Sensors.OfType<MagneticSensor>().FirstOrDefault();
+                    if (sensor1 != null)
+                    {
+                        sensor1.Cancelsterroristattack();
+                        return;
+                    }
                     int index = random.Next(ExposureSensor.Count);
                     ISensor sensor = ExposureSensor[index];
-                    if (sensor is MagneticSensor)
-                    {
-                        if (((MagneticSensor)sensor).Cancelsterroristattack())
-                        {
-                            return;
-                        }
-                    }
+                    //if (sensor is MagneticSensor)
+                    //{
+                    //    if (((MagneticSensor)sensor).Cancelsterroristattack())
+                    //    {
+                    //        return;
+                    //    }
+                    //}
                     ExposureSensor.RemoveAt(index);
                     Sensors[sensor.Type] += 1;
                     Console.WriteLine("remove sensor");

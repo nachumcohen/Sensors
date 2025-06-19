@@ -8,7 +8,7 @@ namespace TheInvestingationGame.Sensors
 {
     internal static class ListSensor
     {
-        private static List<string> Sensors = new List<string>() { "ThermalSensor" , "PluseSensor" , "SensorBasic" , "MagneticSensor" };
+        private static List<string> Sensors = new List<string>() { "ThermalSensor" , "PluseSensor" , "SensorBasic" , "MagneticSensor"};
 
         public static void AddList(ISensor sensor)
         {

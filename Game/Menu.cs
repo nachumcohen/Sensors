@@ -6,16 +6,54 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using TheInvestingationGame.Agents;
+using TheInvestingationGame.Game;
 
 namespace TheInvestingationGame
 {
     internal static class Menu
     {
-        public static void menu()
+        public static async Task menu()
         {
+            PlayerData playerData = null;
+            while (true)
+            {
+                Console.WriteLine(@"Choos:
+                1. New user
+                2. Existing user
+                exit. exit");
+
+                string choos = Console.ReadLine();
+
+                choos.ToLower();
+                switch (choos)
+                {
+                    case "1":
+                        playerData = PlayData.NewUser();
+                        if (playerData != null)
+                        {
+                            break;
+                        }
+                        continue;
+
+                    case "2":
+                        playerData = PlayData.ExistingUser();
+                        if (playerData != null)
+                        {
+                            break;
+                        }
+                        continue;
+
+                    case "exit":
+                        return;
+
+                }
+                break;
+            }
 
             while (true)
             {
+                
+
                     Console.WriteLine(@"Choos:
                 1.Play Agent Basic
                 2. Play Squad Leader
@@ -24,22 +62,21 @@ namespace TheInvestingationGame
                 exit. go out");
 
                 string ChoosUser = Console.ReadLine();
-
                 ChoosUser.ToLower();
                 switch (ChoosUser)
                 {
                     case "1":
-                        Play.StartAgentBasic(); 
+                        await Play.StartAgentBasic(playerData);
                         continue;
                     case "2":
-                        Play.StartAgentSquadLeader();
+                        await Play.StartAgentSquadLeader(playerData);
                         continue;
 
                     case "3":
-                        Play.StartAgentSeniorCommander();
+                        await Play.StartAgentSeniorCommander(playerData);
                         continue;
                     case "4":
-                        Play.StartAgentOrganizationLeader();
+                        await Play.StartAgentOrganizationLeader(playerData);
                         continue;
 
                     case "exit":

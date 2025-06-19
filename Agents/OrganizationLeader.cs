@@ -17,6 +17,10 @@ namespace TheInvestingationGame.Sensors
         {
             return 8;
         }
+        public override int GetLevelAgent()
+        {
+            return 4;
+        }
 
         public override void StartSensors()
         {
@@ -35,19 +39,19 @@ namespace TheInvestingationGame.Sensors
             }
         }
 
-        public void ResetDictSensorsAndListExposureSensor()
-        {
-            ExposureSensor.Clear();
-            Dictionary<string, int> sensors = null;
+        //public void ResetDictSensorsAndListExposureSensor()
+        //{
+        //    ExposureSensor.Clear();
+        //    Dictionary<string, int> sensors = null;
 
-            if (NumAttack % 15 == 0)
-            {
-                sensors =  new Dictionary<string, int>();
+        //    if (NumMistake % 10 == 0)
+        //    {
+        //        sensors =  new Dictionary<string, int>();
 
-                StartSensors();
-                this.Sensors = sensors;
-            }
-        }
+        //        StartSensors();
+        //        this.Sensors = sensors;
+        //    }
+        //}
 
     }
 }
