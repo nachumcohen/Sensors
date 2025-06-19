@@ -12,20 +12,24 @@ namespace TheInvestingationGame.Agents
     {
 
         static Random random = new Random();
+        protected int LevelAgent;
         protected Dictionary<string, int> Sensors {  get;  set; }
         protected List<ISensor> ExposureSensor = new List<ISensor>();
         protected int SensorCount;
         protected List<string> Types;
         protected int NumAttack;
+        protected int NumMistake;
+        protected int NumLoss;
 
         public Agent()
         {
             SensorCount = GetSensorCount();
-            
+            LevelAgent = GetLevelAgent();
             Types = ListSensor.ReturnList();
             Sensors = new Dictionary<string , int>();
             NumAttack = 0;
             StartSensors();
+            
         }
 
         public virtual void StartSensors()
@@ -43,11 +47,14 @@ namespace TheInvestingationGame.Agents
                 }
             }
         }
-        
-        public virtual int GetSensorCount()
-        {
-            return 2;
-        }
+
+        public abstract int GetSensorCount();
+
+        public abstract int GetLevelAgent();
+
+
+
+
 
         public virtual void AddExposureSensor(ISensor sensor)
         {
@@ -87,10 +94,36 @@ namespace TheInvestingationGame.Agents
             return NumAttack;
         }
 
+        public void AddNumMistake()
+        {
+            NumMistake++;
+        }
+
+        public int ReturnNumMistake()
+        {
+            return NumMistake;
+        }
+
         public Dictionary<string, int> GetSensors()
         {
             return Sensors;
         }
+
+        public void ResetDictSensorsAndListExposureSensor()
+        {
+            ExposureSensor.Clear();
+            Dictionary<string, int> sensors = null;
+
+            if (NumMistake % 10 == 0)
+            {
+                sensors = new Dictionary<string, int>();
+
+                StartSensors();
+                this.Sensors = sensors;
+            }
+        }
+
+
 
 
     }

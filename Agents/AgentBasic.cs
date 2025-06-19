@@ -9,5 +9,14 @@ namespace TheInvestingationGame.Agents
     internal class AgentBasic : Agent
     {
         public AgentBasic() : base() { }
+
+        public override int GetSensorCount()
+        {
+            return 2;
+        }
+        public override int GetLevelAgent()
+        {
+            return 1;
+        }
     }
 }

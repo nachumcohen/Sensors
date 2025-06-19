@@ -16,20 +16,24 @@ namespace TheInvestingationGame.Sensors
             
         }
 
-        public override void Activate(Agent iranianAgent)
+        public override bool Activate(Agent iranianAgent)
         {
             if (Active > 0)
             {
                 if (iranianAgent.IsSensor(Type))
                 {
-                    iranianAgent.AddExposureSensor(this);
+                    //iranianAgent.AddExposureSensor(this);
+                    Active--;
+                    return true;
                 }
                 Active--;
+                return false;
             }
             else
             {
                 Console.WriteLine("Sensor is broken");
                 Status = false;
+                return false;
             }
         }
         public int GetManyTurns()
